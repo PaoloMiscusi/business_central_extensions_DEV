@@ -1,0 +1,13 @@
+pageextension 59103 ExtMSCInventoryCard extends "MSC Inventory Card"
+{
+    var
+        RetailUsers: Record "Retail User";
+
+    trigger OnNewRecord(BelowxRec: Boolean)
+    begin
+        RetailUsers.Get(UserId);
+        Rec."Location Code" := RetailUsers."Location Code";
+        Rec."Store No." := Rec."Location Code";
+        Rec."Global Dimension 1 Code" := Rec."Location Code";
+    end;
+}

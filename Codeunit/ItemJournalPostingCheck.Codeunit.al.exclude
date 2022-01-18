@@ -1,0 +1,37 @@
+codeunit 59111 ItemJournalPostingCheck
+{
+
+    [EventSubscriber(ObjectType::Page, Page::"Item Journal", 'OnBeforeActionEvent', 'Post', true, true)]
+    local procedure CheckLotNoNegAdjs(Rec: Record "Item Journal Line")
+    var
+        ItemJournalLines: Record "Item Journal Line";
+    begin
+        ItemJournalLines.Reset();
+        ItemJournalLines.SetFilter("Journal Template Name", Rec."Journal Template Name");
+        ItemJournalLines.SetFilter("Journal Template Name", Rec."Journal Template Name");
+        ItemJournalLines.SetFilter("Journal Template Name", Rec."Journal Template Name");
+        if ItemJournalLines.FindSet() then
+            repeat
+                IsSetLotNo(ItemJournalLines);
+            until ItemJournalLines.Next() <= 0;
+    end;
+
+    local procedure IsSetLotNo(CurRec: Record "Item Journal Line")
+    var
+        ReservationEntries: Record "Reservation Entry";
+    begin
+        if (CurRec."Entry Type" = CurRec."Entry Type"::"Negative Adjmt.") and CurRec."MSC Inbound Lot Requested" then begin
+            ReservationEntries.Reset();
+            ReservationEntries.SetFilter("Source ID", CurRec."Journal Template Name");
+            ReservationEntries.SetRange("Source Ref. No.", CurRec."Line No.");
+            ReservationEntries.SetFilter("Item No.", CurRec."Item No.");
+            if ReservationEntries.FindFirst() then begin
+                if ReservationEntries."Lot No." = '' then
+                    Error('Missing Lot No on Item %1', CurRec."Item No.")
+            end
+            else
+                Error('Missing Lot No on Item %1', CurRec."Item No.");
+        end;
+
+    end;
+}

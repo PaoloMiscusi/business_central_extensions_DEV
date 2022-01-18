@@ -1,0 +1,63 @@
+{
+  "id": "758ad1cd-c853-4bc5-b322-a36a2aeb3e04",
+  "name": "MiscusiExtensions",
+  "publisher": "Miscusi Tech",
+  "version": "1.0.0.27",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "target": "OnPrem",
+  "dependencies": [    
+    {
+    "id": "5ecfc871-5d82-43f1-9c54-59685e82318d",
+    "publisher": "LS Retail",
+    "name": "LS Central",
+    "version": "17.0.0.0"  
+  },
+  {
+    "id": "6f792d36-0705-4d54-9a22-dd61a93c90c6",
+    "name": "MSC Scale",
+    "version": "1.0.0.4",
+    "publisher": "Cluster Reply"
+  },
+  {
+    "id": "3daf228d-1cba-4ef1-824d-f7f26a765306",
+    "publisher": "LS Retail",
+    "name": "LS Central IT",
+    "version": "17.0.0.0"  
+  },
+  {
+    "id": "10c101d4-2406-4eaa-a772-af3f9c50dab2",
+    "name": "Cash Reconciliation",
+    "publisher": "Cluster Reply",
+    "version": "0.0.0.0"
+  },
+  {
+    "id": "a3d42966-cda5-4493-b546-28cb3efdc17b",
+    "name": "Retail - Custom Field",
+    "publisher": "Cluster Reply S.r.l.",
+    "version": "0.0.0.0"
+  },
+  {
+    "id": "37f9cf5c-b9a7-4928-b7c0-5225feb521ce",
+    "name": "MSC Ecommerce Integration",
+    "publisher": "Cluster Reply",
+    "version": "17.0.0.0"
+  }
+],
+"screenshots": [],
+"platform": "1.0.0.0",
+"application": "17.0.0.0",
+"idRanges": [
+  {
+    "from": 59000,
+    "to": 59999
+  }
+],
+"showMyCode": true,
+"runtime": "6.0"
+}

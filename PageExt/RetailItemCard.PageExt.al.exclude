@@ -1,0 +1,522 @@
+pageextension 59116 RetailItemCard extends "Retail Item Card"
+{
+
+    layout
+    {
+        modify(Merchandising)
+        {
+            Visible = false;
+        }
+        modify(POS)
+        {
+            Visible = false;
+        }
+        modify(Warehouse)
+        {
+            Visible = false;
+        }
+        modify("Tracking/Comparison")
+        {
+            Visible = (not RecipeVisible);
+        }
+        modify(Ordering)
+        {
+            Visible = false;
+        }
+        modify(Control1903822601)
+        {
+            Visible = false;
+        }
+        modify("Division Code")
+        {
+            ShowMandatory = true;
+        }
+        modify("Item Disc. Group")
+        {
+            Visible = False;
+        }
+        modify("Item Category Code")
+        {
+            ShowMandatory = true;
+        }
+        modify(Type)
+        {
+            Visible = false;
+        }
+        modify("VAT Bus. Posting Gr. (Price)")
+        {
+            Visible = false;
+        }
+        modify("ProductExt.DefaultBarcode(Rec)")
+        {
+            Visible = false;
+        }
+        modify("Barcode Mask")
+        {
+            Visible = false;
+        }
+        modify("Common Item No.")
+        {
+            Visible = false;
+        }
+        modify("Special Group Code")
+        {
+            Visible = false;
+        }
+        modify("Variant Framework Code")
+        {
+            Visible = false;
+        }
+        modify(GTIN)
+        {
+            Visible = false;
+        }
+        modify("Print Variants Shelf Labels")
+        {
+            Visible = false;
+        }
+        modify("Date Created")
+        {
+            Visible = false;
+        }
+        modify("Created by User")
+        {
+            Visible = false;
+        }
+        modify("Last Date Modified")
+        {
+            Visible = false;
+        }
+        modify("Last Modified by User")
+        {
+            Visible = false;
+        }
+        modify("Automatic Ext. Texts")
+        {
+            Visible = false;
+        }
+        modify("Unit Price")
+        {
+            Visible = false;
+        }
+        modify("Unit Price Including VAT")
+        {
+            Visible = false;
+        }
+        modify("Price Includes VAT")
+        {
+            Visible = false;
+        }
+        modify("Standard Cost")
+        {
+            Visible = false;
+        }
+        modify("Price/Profit Calculation")
+        {
+            Visible = false;
+        }
+        modify("POS Cost Calculation")
+        {
+            Visible = false;
+        }
+        modify("Profit Goal %")
+        {
+            Visible = false;
+        }
+        modify("Allow Invoice Disc.")
+        {
+            Visible = false;
+        }
+        modify("<Base Unit of Measure2>")
+        {
+            Visible = false;
+        }
+        modify("Base Comp. Unit Code")
+        {
+            Visible = false;
+        }
+        modify("Qty. per Base Comp. Unit")
+        {
+            Visible = false;
+        }
+        modify("Comparison Unit Code")
+        {
+            Visible = false;
+        }
+        modify("Comp. Price Incl. VAT")
+        {
+            Visible = false;
+        }
+        modify("Cost is Adjusted")
+        {
+            Visible = false;
+        }
+        modify("Select Lowest Price Vendor")
+        {
+            Visible = false;
+        }
+        modify(Reserve)
+        {
+            Visible = false;
+        }
+        modify("Def. Ordered by")
+        {
+            Visible = false;
+        }
+        modify("Def. Ordering Method")
+        {
+            Visible = false;
+        }
+        modify("Replenishment System")
+        {
+            Visible = false;
+        }
+        modify("Maximum Inventory")
+        {
+            Visible = false;
+        }
+        modify("Reorder Point")
+        {
+            Visible = false;
+        }
+        modify("Reorder Quantity")
+        {
+            Visible = false;
+        }
+        modify("Reordering Policy")
+        {
+            Visible = false;
+        }
+        modify("Safety Lead Time")
+        {
+            Visible = false;
+        }
+        modify("Safety Stock Quantity")
+        {
+            Visible = false;
+        }
+        modify("Minimum Order Quantity")
+        {
+            Visible = false;
+        }
+        modify("Order Multiple")
+        {
+            Visible = false;
+        }
+        modify("Maximum Order Quantity")
+        {
+            Visible = false;
+        }
+        modify("Assembly BOM")
+        {
+            Visible = false;
+        }
+        modify("Shelf No.")
+        {
+            Importance = Additional;
+        }
+        modify("Country/Region of Origin Code")
+        {
+            Visible = false;
+        }
+        modify("Serial Nos.")
+        {
+            Visible = false;
+        }
+        modify("Expiration Calculation")
+        {
+            Visible = false;
+        }
+        modify("<Base Unit of Measure3>")
+        {
+            Visible = false;
+        }
+        modify("<Base Comp. Unit Code3>")
+        {
+            Visible = false;
+        }
+        modify("<Comparison Unit Code3>")
+        {
+            Visible = false;
+        }
+        modify("<Qty. per Base Comp. Unit3>")
+        {
+            Visible = false;
+        }
+        modify("<Comp. Price Incl. VAT3>")
+        {
+            Visible = false;
+        }
+        modify("MSCSCALE Scale")
+        {
+            Visible = false;
+        }
+        modify("Item Family Code")
+        {
+            Caption = 'Product Temperature';
+        }
+
+        addafter("Base Unit of Measure")
+        {
+            field("BOM Method"; Rec."BOM Method")
+            {
+                ApplicationArea = All;
+            }
+            field("Production Time (Min.)"; Rec."Production Time (Min.)")
+            {
+                ApplicationArea = All;
+            }
+        }
+        addafter(Description)
+        {
+            field("Description 2"; Rec."Description 2")
+            {
+                ApplicationArea = All;
+            }
+        }
+
+        moveafter("Item Family Code"; "MSCSCALE Scale EAN Code")
+        moveafter("Base Unit of Measure"; "Purch. Unit of Measure", "Transfer Unit")
+        moveafter("Retail Product Code"; "Tariff No.")
+
+        addafter("Item Category Code")
+        {
+            field("Recipe Item Type"; Rec."Recipe Item Type")
+            {
+                ApplicationArea = All;
+                Caption = 'Item Type';
+
+                trigger OnValidate()
+                begin
+                    InitializeVariables();
+                    if RecipeVisible then Rec."Division Code" := 'RICETTA';
+
+                end;
+            }
+            field(Rotation; Rec."Attrib 1 Code")
+            {
+                ApplicationArea = All;
+                Caption = 'Cat ABC';
+                ShowCaption = true;
+            }
+        }
+
+        addbefore(Invoicing)
+        {
+            part("Item Units of Measure"; ItemUnitsofMeasureListPart)
+            {
+                ApplicationArea = All;
+                Caption = 'Item Units of Measure';
+                SubPageLink = "Item No." = FIELD("No.");
+            }
+        }
+
+        addlast(Content)
+        {
+            part("Cross Reference"; ItemCrossReferenceListPart)
+            {
+                ApplicationArea = All;
+                Visible = (not RecipeVisible);
+                Caption = 'Cross Reference';
+                SubPageLink = "Item No." = FIELD("No.");
+            }
+            part("Default Dimensions"; DefaultDimensionsListPart)
+            {
+                ApplicationArea = All;
+                Caption = 'Default Dimensions';
+                SubPageLink = "No." = FIELD("No."), "Table ID" = CONST(27);
+            }
+            part("Purchase Prices"; PurchasePricesListPart)
+            {
+                ApplicationArea = All;
+                Visible = (not RecipeVisible);
+                Caption = 'Purchase Prices';
+                SubPageLink = "Item No." = FIELD("No.");
+            }
+            part(Attribute; AttributeListItemRetailPage)
+            {
+                ApplicationArea = All;
+                Caption = 'Attributes List';
+                SubPageLink = "Link Field 1" = FIELD("No."),
+                               "Link Type" = CONST(Item);
+            }
+
+            part(Status; ItemItemStatusLinksListPart)
+            {
+                ApplicationArea = All;
+                Caption = 'Status List';
+                SubPageLink = "Item No." = FIELD("No.");
+            }
+            part(BomSubform; "BOM Recipe Item Lines")
+            {
+                ApplicationArea = All;
+                Visible = RecipeVisible;
+                Caption = 'Ingredients';
+                SubPageLink = "Parent Item No." = FIELD(FILTER("No.")),
+                              "BOM Component Type" = CONST(Ingredient);
+                UpdatePropagation = Both;
+            }
+
+            part(ItemDefaultMenuTypesListPart; ItemDefaultMenuTypesListPart)
+            {
+                ApplicationArea = All;
+                Visible = RecipeVisible;
+                Caption = 'Item Default Menu Types';
+                SubPageLink = "No." = FIELD(FILTER("No.")),
+                Type = CONST(Item);
+                UpdatePropagation = Both;
+            }
+            part(ItemSectionRouting; "Item Section Routing Lines")
+            {
+                ApplicationArea = All;
+                Visible = RecipeVisible;
+                Caption = 'KDS Routing';
+                SubPageLink = "Item Type" = CONST(Item),
+                              Code = FIELD("No.");
+            }
+            part("Item Modifiers"; TableSpecificInfocodesListPart)
+            {
+                ApplicationArea = All;
+                Caption = 'Item Modifiers';
+                Visible = RecipeVisible;
+                SubPageLink = "Table ID" = CONST(27),
+                                      Value = FIELD("No."),
+                                      "Usage Category" = CONST("Item Modifier"),
+                                      "Usage Sub-Category" = CONST(" ");
+            }
+        }
+    }
+
+    actions
+    {
+        addafter("&Master Data")
+        {
+            action("Item &Modifiers")
+            {
+                ApplicationArea = All;
+                Caption = 'Item &Modifiers';
+                Image = AdjustEntries;
+                Promoted = true;
+                PromotedCategory = Category4;
+                PromotedIsBig = true;
+                RunObject = Page "Table Specific Infocodes";
+                RunPageLink = "Table ID" = CONST(27),
+                                      Value = FIELD("No."),
+                                      "Usage Category" = CONST("Item Modifier"),
+                                      "Usage Sub-Category" = CONST(" ");
+            }
+        }
+
+        modify("Items By Location")
+        {
+            Promoted = true;
+            PromotedCategory = Category4;
+            PromotedIsBig = true;
+        }
+    }
+
+    trigger OnOpenPage();
+    begin
+        InitializeVariables();
+    end;
+
+    var
+        [InDataSet]
+        RecipeVisible, IngredientVisible : Boolean;
+
+    local procedure InitializeVariables()
+    begin
+        case Rec."Recipe Item Type" of
+            Rec."Recipe Item Type"::" ":
+                SetFieldsVisible(false, false);
+            Rec."Recipe Item Type"::Ingredient:
+                SetFieldsVisible(false, true);
+            Rec."Recipe Item Type"::Recipe:
+                SetFieldsVisible(true, false);
+        end;
+    end;
+
+    local procedure SetFieldsVisible(NewRecipeVisible: Boolean; NewIngredientVisible: Boolean)
+    begin
+        RecipeVisible := NewRecipeVisible;
+        IngredientVisible := NewIngredientVisible;
+    end;
+
+    trigger OnNewRecord(BelowxRec: Boolean)
+    begin
+        Rec."Inventory Posting Group" := 'MAG';
+
+
+
+    end;
+
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        if Rec."Description 2" = '' then
+            Rec."Description 2" := CopyStr(rec.Description, 1, 50);
+    end;
+
+    procedure GenerateDefaultMenuTypes()
+    var
+        ItemDefaultMenuTypesRec: Record "Default Restaurant Menu Type";
+        ItemDefaultMenuTypesCheckRec: Record "Default Restaurant Menu Type";
+        Stores: Record Store;
+    begin
+        if Rec."Recipe Item Type" = Rec."Recipe Item Type"::Recipe then begin
+            Stores.SetFilter("Location Code", '%1&<>%2', 'I*', 'IWRS');
+            ItemDefaultMenuTypesCheckRec.SetRange("No.", Rec."No.");
+            ItemDefaultMenuTypesCheckRec.SetRange(Type, ItemDefaultMenuTypesCheckRec.Type::Item);
+            if Stores.FindSet() then
+                repeat
+                    ItemDefaultMenuTypesCheckRec.SetRange("Restaurant No.", Stores."Location Code");
+                    if ItemDefaultMenuTypesCheckRec.IsEmpty() then begin
+                        ItemDefaultMenuTypesRec.Init();
+                        ItemDefaultMenuTypesRec."No." := Rec."No.";
+                        ItemDefaultMenuTypesRec."Restaurant No." := Stores."Location Code";
+                        ItemDefaultMenuTypesRec."Menu Type Order" := 1;
+                        ItemDefaultMenuTypesRec.Type := ItemDefaultMenuTypesRec.Type::Item;
+                        ItemDefaultMenuTypesRec.Insert(true);
+                    end;
+                Until Stores.Next() = 0;
+        end;
+    end;
+
+    trigger OnModifyRecord(): Boolean
+    var
+        SalesPrice: Record "Sales Price";
+        ItemDistribution: Record "Item Distribution";
+        RetailItemUtils: Codeunit RetailItemUtils;
+    begin
+        if Rec."Item Tracking Code" = 'INBOUND' then
+            Rec."Lot Nos." := 'LOTTI';
+        if (Rec."Recipe Item Type" = Rec."Recipe Item Type"::Recipe) and (xRec."Recipe Item Type" <> Rec."Recipe Item Type"::Recipe) then begin
+            if (Rec."BOM Method" <> Rec."BOM Method"::"Explode at Posting") or (Rec."Base Unit of Measure" <> 'UN') then begin
+                Rec."BOM Method" := Rec."BOM Method"::"Explode at Posting";
+                Rec."Base Unit of Measure" := 'UN';
+                Rec.Modify(true);
+            end;
+            RetailItemUtils.GenerateDefaultMenuTypes(Rec);
+        end;
+        if Rec."No." <> '' then begin
+            ItemDistribution.SetRange("Item No.", Rec."No.");
+            ItemDistribution.SetRange(Code, 'ALL');
+            if ItemDistribution.IsEmpty() then begin
+                ItemDistribution.Init();
+                ItemDistribution."Item No." := Rec."No.";
+                ItemDistribution.Code := 'ALL';
+                ItemDistribution.Type := ItemDistribution.Type::Store;
+                ItemDistribution.Status := ItemDistribution.Status::Active;
+                ItemDistribution.Insert();
+            end;
+        end
+    end;
+
+    trigger OnQueryClosePage(CloseAction: Action): Boolean;
+    begin
+        Rec.TestField("Division Code");
+        Rec.TestField("Item Category Code");
+
+    end;
+
+
+}
